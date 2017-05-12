@@ -55,9 +55,6 @@ sub find2login {
             passwd => md5_hex($passwd),
         },
     );
-    
-    delete $res->{'passwd'}
-        if $res;
         
     $res = $m->single( $stmt, \@bind );
     
