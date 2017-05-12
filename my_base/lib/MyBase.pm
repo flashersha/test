@@ -18,9 +18,9 @@ sub startup {
             ->new()
                 ->config;
         
-	$app->sessions->cookie_name       ($app->{'config'}->{'session'}->{'cookie_name'}       );
-	$app->sessions->default_expiration($app->{'config'}->{'session'}->{'default_expiration'});
-	$app->sessions->secure            ($app->{'config'}->{'session'}->{'secure'}            );    
+    $app->sessions->cookie_name       ($app->{'config'}->{'session'}->{'cookie_name'}       );
+    $app->sessions->default_expiration($app->{'config'}->{'session'}->{'default_expiration'});
+    $app->sessions->secure            ($app->{'config'}->{'session'}->{'secure'}            );    
 
     $app->plugin('MyBase::Plugin::Session');
     $app->plugin('MyBase::Plugin::Utils');
@@ -66,14 +66,14 @@ sub startup {
     #*****************************************************        
     $r->post('/login'  )->to('user#login'  );
     $r->get ('/logout' )->to('user#logout' );
-    $r->get("/list"    )->to( cb => sub {
+    $r->get ("/list"   )->to( cb => sub {
         my $c = shift;
         return $c->redirect_to("/");
     });
         
-    $r->get ('/captcha')->to('page#captcha');
-    $r->any('/'        )->to('page#index'   );
-    $r->any('/(*)'     )->to('page#page_404');
+    $r->get('/captcha')->to('page#captcha');
+    $r->any('/'       )->to('page#index'   );
+    $r->any('/(*)'    )->to('page#page_404');
 }
 
 1;
