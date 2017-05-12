@@ -1,0 +1,50 @@
+         
+          
+ [% UNLESS user %]
+    <div class="app no-padding no-footer layout-static">
+      <div class="session-panel">
+        <div class="session ">
+          <div class="session-content text-xs-center">
+            <div>
+              <div class="card b-a-0 no-bg no-shadow">
+                <div class="card-block">
+                  <div class="lockscreen-avatar">
+                    <img src="/app/images/avatar.jpg" class="avatar avatar-lg img-circle" alt="user" title="user"/>
+                  </div>
+                  <div class="center-block lockcode m-t-1">
+                    <form role="form" action="/login" method="post">
+                      <input type="hidden" name="csrf_token" value="[% session.csrf_token %]">
+                       <fieldset class="form-group">
+                        <label for="exampleInputLogin">
+                          E-mail
+                        </label>
+                        <input name="email" type="text" class="form-control" id="exampleInputLogin" value="demo@demo.com">
+                       </fieldset>
+                       <fieldset class="form-group">
+                        <label for="exampleInputPassword1">
+                          Пароль
+                        </label>
+                        <input name="passwd" type="password" class="form-control" id="exampleInputPassword1" value="demo">
+                      </fieldset>                      
+                       <fieldset class="form-group">
+                        <label for="exampleInputPassword2">
+                          Введите текст с картинки
+                          <img src="/captcha?[% rand() %]" height="80"/>
+                        </label>
+                        <input name="captcha" type="text" class="form-control" id="exampleInputPassword2" value="">
+                      </fieldset>                      
+                      <a id="login" class="btn btn-success btn-block b-a-0">
+                        Авторизация
+                      </a>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>  
+ [% END %]
+
+

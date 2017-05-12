@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Тестовое задание - IT Star</title>
+        <meta charset="utf-8"/>
+        <meta name=viewport content="width=device-width, initial-scale=1">
+        <script type="text/javascript" src="/js/pace.min.js"></script>
+        <link href="/css/pace-loading-bar.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="/css/animate.caliber.css">
+        <link rel="stylesheet" type="text/css" href="/css/materialdesignicons.caliber.css">
+        <link rel="stylesheet" type="text/css" href="/css/bootstrap.css">
+        <link rel="stylesheet" href="/css/font-awesome.css"/>
+        
+        <script type="text/javascript" src="/js/jquery.min.js"></script>
+        <script src="/js/inviewport-1.3.2.js"></script>
+        <!--Mixitup -->
+        <script type="text/javascript" src="/js/jquery.mixitup.min.js"></script>
+        <!--Fancybox -->
+        <script type="text/javascript" src="/js/jquery.fancybox.pack.js"></script>
+        <link rel="stylesheet" type="text/css" href="/css/jquery.fancybox.css" media="screen" />
+        <!--Parallax -->
+        <script type="text/javascript" src="/js/jquery.parallax-1.1.3.js"></script>
+        <script type="text/javascript" src="/js/jquery.localscroll-1.2.7-min.js"></script>
+        <script type="text/javascript" src="/js/jquery.scrollTo-1.4.6-min.js"></script>
+        <!-- Main Style -->
+        <link rel="stylesheet" id="main-style" type="text/css" href="/css/style.green.css">
+        <script type="text/javascript" src="/js/main.js"></script>
+    </head>
+    <body class=" angled  yellow">
+
+<section class="header bg-lightgray header-parallax" id="header">    
+    <!-- Menu Top Bar - Start -->
+    <div class="topbar " data-effect="fadeIn">
+        <div class="menu">
+            <div class="primary inviewport animated delay4" data-effect="fadeInRightBig">
+                <div class='cssmenu'>
+                    <!-- Primary Menu - Start -->
+                    <ul class='menu-ul' id='parallax-nav-primary'>
+                    <li class="homelink"><a class="" href="#header">Главная</a></li>
+                </ul>
+                <!-- Primary Menu - End -->
+            </div>
+        </div>
+        <div class="black inviewport animated delay4" data-effect="fadeInLeftBig">
+            <div class='cssmenu'>
+                <!-- Dark Menu - Start -->
+                <ul class='menu-ul' id='parallax-nav-dark'>
+                <li class="capabilities">
+                    [% IF user.id %]
+                    <a class="" href="/list">[% user.user_name %]</a>
+                    [% ELSE %]
+                    <a id="c_send" href="javascript:void(0);">Авторизация</a>
+                    [% END %]
+                </li>
+                [% IF user.id %]
+                <li class="capabilities">
+                    <a id="logout" href="javascript:void(0);">выйти</a>
+                </li>
+                [% END %]
+            </ul>
+            <!-- Dark Menu - End -->
+        </div>
+    </div>
+</div>
+</div>
+    
+<!-- Menu Top Bar - End -->
+<!-- Logo and Mobile Menu - Start -->
+<div class='header-logo-wrap'>
+<div class="container">
+    <div class="logo col-xs-2">
+        <span><nobr><i class="fa fa-leaf" aria-hidden="true"></i> [% config.app.name %]</nobr></span>
+    </div>
+    <div class="menu-mobile col-xs-10 pull-right cssmenu">
+        <i class="mdi mdi-menu menu-toggle"></i>
+        <ul class="menu" id='parallax-mobile-menu'>
+        </ul>
+    </div>
+</div>
+</div>
+<!-- Logo and Mobile Menu - End -->
+
+
+<!-- Header Slide - Start -->
+<div class="header-slide" style="position:relative;">
+<img alt="header-banner-image" src="/section-9.jpg" class='header-img' style=''>
+<div class="overlay overlay1">
+    <div class="black inviewport animated delay4" data-effect="fadeInLeftOpacity"></div>
+    <div class="primary inviewport animated delay4" data-effect="fadeInRightOpacity"></div>
+    <!-- Header Text - Start -->
+    <div class="maintext">
+        <div class="primary-text inviewport animated delay4" data-effect="fadeInRightBig">
+            <div class="left-line">
+                <h4>it star</h4>
+                <h1>Guest</h1>
+            </div>
+        </div>
+        <div class="black-text inviewport animated delay4" data-effect="fadeInLeftBig">
+            <div>
+                <h1>book</h1>
+            </div>
+        </div>
+    </div>
+    <!-- Header Text - End -->
+</div>
+</div>
+<!-- Header Slide - End -->
+</section>
+
+
+<!-- Section Start - Footer -->
+<section class='footer bg-black padding-bottom-25'>
+<!-- Copyright Bar - Start -->
+<div class="copyright" style="margin-top:0">
+<div class="col-md-12">
+<div class="container">
+<div class="">
+    <div class="col-lg-6 col-md-6 col-sm-8 col-xs-12 message inviewport animated delay1" data-effect="fadeInUp">
+        <span class="">&copy; 2017 [% config.app.name %]</span>
+    </div>
+</div>
+</div>
+</div>
+</div>
+<!-- Copyright Bar - End -->
+</section>
+<!-- Section End - Footer -->
+</body>
+
+
+
+<script>
+$( document ).ready(function() {
+    var me = $('body');
+    
+    $('a#c_send', me).on('click', function(){
+        var url  = '/login';
+        var form = {};                        
+        form.user_name  = 'demo';
+        form.passwd     = 'demo';
+        form.csrf_token = '[% session.csrf_token %]';
+        
+        send_data ( me, url, form , 'POST', 'json', function( msg ){
+            if( msg && msg.success ){
+                location.reload();
+            }
+            else{
+                console.log( msg );
+            }
+        });
+    });    
+
+    $('a#logout', me).on('click', function(){
+        var url  = '/logout';
+        var form = {};                        
+        form.csrf_token = '[% session.csrf_token %]';
+        
+        send_data ( me, url, form , 'POST', 'json', function( msg ){
+            if( msg && msg.success ){
+                location.reload();
+            }
+            else{
+                console.log( msg );
+            }
+        });
+    });    
+    
+});
+</script>
+
+
+<script>
+function send_data ( div, url, data, method, type, fn_callback ) {
+    var me    = div;
+
+    var obj  = {
+        url         : url,
+        type        : method ? method : "GET",
+        dataType    : type   ? type   : "html",
+        data        : data
+    };
+    
+    if ( me && url ) {
+        if ( me.data('jqxhr') ) {
+            me.data('jqxhr').abort();
+        }
+        var jqxhr = $.ajax(obj)
+        .done(function( msg ){
+            if (!msg) {
+                return false;
+            }
+            if (fn_callback) fn_callback.call( this, msg );
+            
+        }).fail  (function(mes) {
+        }).always(function(mes) {
+        });
+        me.data('jqxhr', jqxhr);
+    }
+    
+}    
+</script>
+</html>

@@ -1,0 +1,199 @@
+
+          <div class="content-footer">
+
+            <nav class="footer-left">
+              <ul class="nav">
+                <li>
+                  <a href="javascript:;">
+                    <span>Copyright</span>
+                    &copy; 2017 [% config.app.name %]
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+          <!-- /bottom footer -->
+        </div>
+        <!-- /main area -->
+      </div>
+      <!-- /content panel -->
+    
+    </div>
+        
+
+
+    <script src="/js/jquery.js"></script>    
+    <script src="/js/pace.min.js"></script>
+    <script src="/app/vendor/tether/dist/js/tether.js"></script>
+    <script src="/app/vendor/bootstrap/dist/js/bootstrap.js"></script>
+    
+    <!-- page scripts -->
+    <script src="/js/jquery.bootgrid.js"></script>
+    <!-- end page scripts -->
+
+    <!-- page scripts -->
+    <script src="/app/vendor/sweetalert/dist/sweetalert.min.js"></script>
+    <!-- end page scripts -->
+
+<script>
+$( document ).ready(function() {
+
+    var me = $('body');
+  
+    $('a#add_message',me).on('click', function() {
+      swal({
+        title: 'Новое сообщение',
+        text: 'Введите текст сообщения',
+        type: 'input',
+        showCancelButton: true,
+        closeOnConfirm: false,
+        animation: 'slide-from-top',
+        inputPlaceholder: 'Ваш текст'
+      }, function(inputValue) {
+        var form = {};
+        form.csrf_token = '[% session.csrf_token %]';
+        
+        if (inputValue === false) {
+          return false;
+        }
+        if (inputValue === '') {
+          swal.showInputError('Нужно ввести текст сообщения');
+          return false;
+        }
+        form.text = inputValue;
+
+        send_data ( me, '/app/list', form , 'POST', 'json', function( msg ){
+            if( msg && msg.success ){
+              setTimeout(function() {
+                swal('Отлично!', 'Сообщение опубликовано', 'success');
+              }, 2000);
+              window.location.href = '/list';
+            }
+            else{
+              swal({
+                title: msg.error,
+                text: 'I will close in 2 seconds.',
+                timer: 2000
+              });
+            }
+        });
+        
+      });
+    });
+  
+    $("table#grid-data-api", me).bootgrid({
+      ajaxSettings: {
+          method : "GET",
+          cache  : false
+      },
+      ajax     : true,
+      url      :'/app/list',
+      rowCount : [[% settings.page.rows %]],
+      navigation : 2,
+      css    : {
+        paginationButton: "page-link"
+      }
+    });
+    
+    $('a#login', me).on('click', function(){
+        var url  = '/login';
+        var form = {};                        
+        form.email      = $('input[name=email]').val();
+        form.passwd     = $('input[name=passwd]').val();
+        form.csrf_token = $('input[name=csrf_token]').val();
+        form.captcha    = $('input[name=captcha]').val();
+        
+        if( !form.email ){
+          swal({
+            title: 'Поле E-mail пустое...',
+            timer: 2000
+          });
+          $('input[name=user_name]').focus();
+          return false;
+        }
+
+        if( !form.passwd ){
+          swal({
+            title: 'Поле Пароль пустое...',
+            timer: 2000
+          });
+          $('input[name=passwd]').focus();
+          return false;
+        }
+
+        if( !form.captcha ){
+          swal({
+            title: 'Поле Введите текст с картинки пустое...',
+            timer: 2000
+          });
+          $('input[name=passwd]').focus();
+          return false;
+        }
+        
+        send_data ( me, url, form , 'POST', 'json', function( msg ){
+            if( msg && msg.success ){
+                window.location.href = '/list';
+            }
+            else{
+                swal({
+                  title: msg.error,
+                  text: 'I will close in 2 seconds.',
+                  timer: 2000
+                });
+            }
+        });
+    });    
+
+    $('a#logout', me).on('click', function(){
+        var url  = '/logout';
+        var form = {};                        
+        form.csrf_token = $('input[name=csrf_token]').val();
+        
+        send_data ( me, url, form , 'GET', 'json', function( msg ){
+            if( msg && msg.success ){
+                location.reload();
+            }
+            else{
+                console.log( msg );
+            }
+        });
+    });    
+    
+});
+</script>
+
+
+<script>
+function send_data ( div, url, data, method, type, fn_callback ) {
+    var me    = div;
+
+    var obj  = {
+        url         : url,
+        type        : method ? method : "GET",
+        dataType    : type   ? type   : "html",
+        data        : data
+    };
+    
+    if ( me && url ) {
+        if ( me.data('jqxhr') ) {
+            me.data('jqxhr').abort();
+        }
+        var jqxhr = $.ajax(obj)
+        .done(function( msg ){
+            if (!msg) {
+                return false;
+            }
+            if (fn_callback) fn_callback.call( this, msg );
+            
+        }).fail  (function(mes) {
+        }).always(function(mes) {
+        });
+        me.data('jqxhr', jqxhr);
+    }
+    
+}    
+</script>    
+    
+    
+  </body>
+</html>

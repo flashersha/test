@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content=""/>
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1"/>
+    <meta name="msapplication-tap-highlight" content="no">
+    
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="Milestone">
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Milestone">
+
+    <meta name="theme-color" content="#4C7FF0">
+    
+    <title>[% config.app.name %]</title>
+
+    <!-- page stylesheets -->
+    <link rel="stylesheet" href="/app/vendor/sweetalert/dist/sweetalert.css">    
+    <!-- end page stylesheets -->
+    
+    
+    <link rel="stylesheet" href="/app/vendor/bootstrap/dist/css/bootstrap.css"/>
+    <link rel="stylesheet" href="/app/vendor/pace/themes/blue/pace-theme-minimal.css"/>
+    <link rel="stylesheet" href="/app/vendor/animate.css/animate.css"/>
+    <link rel="stylesheet" href="/app/vendor/font-awesome/css/font-awesome.css"/>
+
+    <link rel="stylesheet" href="/css/jquery.bootgrid.css">    
+    
+    <link rel="stylesheet" href="/app/styles/app.css" id="load_styles_before"/>
+    <link rel="stylesheet" href="/app/styles/app.skins.css"/>
+    <!-- endbuild -->
+  </head>
+  <body class="skin-1 no-bg">
+    
+    <!--<div class="app boxed expanding no-bg">-->
+    <div class="app no-bg">    
+
+      <!--sidebar panel-->
+      <div class="off-canvas-overlay" data-toggle="sidebar"></div>
+
+
+      <!-- content panel -->
+      <div class="main-panel no-bg">
+              
+        <!-- top header -->
+        
+        
+        <nav class="header navbar">
+          <div class="header-inner">
+            <div class="navbar-item navbar-spacer-right brand hidden-lg-up">
+              <!-- toggle offscreen menu -->
+              <a href="javascript:;" data-toggle="sidebar" class="toggle-offscreen">
+                <i class="material-icons">menu</i>
+              </a>
+            </div>
+            
+            <a class="navbar-item navbar-spacer-right navbar-heading hidden-md-down" href="/">
+              <i class="fa fa-leaf" aria-hidden="true"></i>
+              [% config.app.name %]
+            </a>
+              
+            <div class="navbar-item nav navbar-nav">
+              [% IF user %]
+              <div class="nav-item nav-link">
+                <a href="/list">
+                  <i class="material-icons">account_circle</i>
+                  <span>[% user.user_name %]</span>
+                </a>
+              </div>
+              
+
+              <div class="nav-item nav-link">
+                <a id="logout" href="javascript:void(0);" >
+                  <i class="material-icons">exit_to_app</i>
+                  <span>Выйти</span>
+                </a>
+              </div>
+              [% END %]
+              
+            </div>
+          </div>
+        </nav>
+        <!-- /top header -->
+
+        <!-- main area -->
+        <div class="main-content no-bg">
+                  

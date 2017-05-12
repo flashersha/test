@@ -1,0 +1,5 @@
+#!/bin/bash
+
+export MOJO_REVERSE_PROXY=1
+exec starman -E development --preload-app -Ilib --listen :3000 --workers 1 --backlog 128 --disable-proctitle ../my_base/script/my_base
+
