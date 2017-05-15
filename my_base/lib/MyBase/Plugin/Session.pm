@@ -126,8 +126,8 @@ sub register {
 				$c->session( expires => 1 );
 				return $c->render(
 					json   => {
-					success => \0,
-					error   => 'Wrong CSRF protection',
+						success => \0,
+						error   => 'Wrong CSRF protection',
 					}
 				);
 			}
