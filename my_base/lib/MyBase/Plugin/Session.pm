@@ -110,7 +110,7 @@ sub register {
 	});
 
 
-	$app->hook( after_dispatch => sub {
+	$app->hook( before_routes => sub {
 		my $c = shift;
 		
 		# Проверка на csrf		
